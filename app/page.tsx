@@ -1,17 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ChevronDown, Search } from "lucide-react";
-import MobileMenu from "./components/mobile-menu";
-import AIExplainer from "./components/ai-explainer";
-import GoogleSignIn from "./components/google-sign-in";
-
+import Image from "next/image"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import AIExplainer from "../components/ui/ai-explainer"
+import { TopBar } from "@/components/ui/topbar"
 export default function Home() {
   // Mock news data
   const featuredNews = {
@@ -22,7 +13,7 @@ export default function Home() {
     date: "May 3, 2025",
     readTime: "5 min read",
     image: "/placeholder.svg?height=400&width=600",
-  };
+  }
 
   const latestNews = [
     {
@@ -55,7 +46,7 @@ export default function Home() {
       readTime: "6 min read",
       image: "/placeholder.svg?height=300&width=400",
     },
-  ];
+  ]
 
   const trendingNews = [
     {
@@ -94,11 +85,16 @@ export default function Home() {
       date: "May 1, 2025",
       readTime: "7 min read",
     },
-  ];
+  ]
 
   return (
-    
     <div className="min-h-screen bg-gray-100">
+      {/* Top bar with date and subscription info */}
+      <TopBar />
+
+      {/* Main header with logo and navigation */}
+
+
       <main className="container mx-auto px-4 py-8">
         {/* Featured article */}
         <section className="mb-12">
@@ -110,23 +106,18 @@ export default function Home() {
               <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                 {featuredNews.title}
               </h1>
-              <p className="text-gray-700 text-base md:text-lg mb-4">
-                {featuredNews.excerpt}
-              </p>
+              <p className="text-gray-700 text-base md:text-lg mb-4">{featuredNews.excerpt}</p>
               <div className="flex items-center text-sm text-gray-500 mb-4">
                 <span>{featuredNews.date}</span>
                 <span className="mx-2">•</span>
                 <span>{featuredNews.readTime}</span>
               </div>
               <div className="flex flex-wrap gap-2">
-                <Button className="bg-black hover:bg-gray-800 text-white">
-                  Read Full Article
-                </Button>
+                <Button className="bg-black hover:bg-gray-800 text-white">Read Full Article</Button>
                 <Button variant="outline">Save for Later</Button>
               </div>
               <div className="mt-4 text-sm">
-                <span className="font-medium">Sources:</span> Reuters, AP News,
-                Bloomberg
+                <span className="font-medium">Sources:</span> Reuters, AP News, Bloomberg
               </div>
             </div>
             <div className="relative h-[250px] md:h-[400px] w-full">
@@ -154,39 +145,24 @@ export default function Home() {
             {latestNews.map((article) => (
               <div key={article.id} className="border-b pb-6">
                 <div className="relative h-[180px] w-full mb-4">
-                  <Image
-                    src={article.image || "/placeholder.svg"}
-                    alt={article.title}
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src={article.image || "/placeholder.svg"} alt={article.title} fill className="object-cover" />
                 </div>
-                <span className="inline-block bg-gray-200 px-2 py-1 text-xs font-medium mb-2">
-                  {article.category}
-                </span>
-                <h3 className="font-serif text-lg md:text-xl font-bold mb-2">
-                  {article.title}
-                </h3>
-                <p className="text-gray-700 mb-3 text-xs md:text-sm">
-                  {article.excerpt}
-                </p>
+                <span className="inline-block bg-gray-200 px-2 py-1 text-xs font-medium mb-2">{article.category}</span>
+                <h3 className="font-serif text-lg md:text-xl font-bold mb-2">{article.title}</h3>
+                <p className="text-gray-700 mb-3 text-xs md:text-sm">{article.excerpt}</p>
                 <div className="flex items-center text-xs text-gray-500">
                   <span>{article.date}</span>
                   <span className="mx-2">•</span>
                   <span>{article.readTime}</span>
                 </div>
                 <div className="mt-2 text-xs">
-                  <span className="font-medium">Sources:</span> NYT, Guardian,
-                  WSJ
+                  <span className="font-medium">Sources:</span> NYT, Guardian, WSJ
                 </div>
               </div>
             ))}
           </div>
           <div className="mt-6 text-center">
-            <Button
-              variant="outline"
-              className="border-black text-black hover:bg-gray-100"
-            >
+            <Button variant="outline" className="border-black text-black hover:bg-gray-100">
               View More Articles
             </Button>
           </div>
@@ -202,19 +178,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
             {trendingNews.map((article) => (
               <div key={article.id} className="flex border-b pb-4">
-                <div className="mr-4 text-3xl font-serif font-bold text-gray-300">
-                  {article.id}
-                </div>
+                <div className="mr-4 text-3xl font-serif font-bold text-gray-300">{article.id}</div>
                 <div>
                   <span className="inline-block bg-gray-200 px-2 py-1 text-xs font-medium mb-2">
                     {article.category}
                   </span>
-                  <h3 className="font-serif text-lg font-bold mb-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-700 mb-2 text-sm">
-                    {article.excerpt}
-                  </p>
+                  <h3 className="font-serif text-lg font-bold mb-2">{article.title}</h3>
+                  <p className="text-gray-700 mb-2 text-sm">{article.excerpt}</p>
                   <div className="flex items-center text-xs text-gray-500">
                     <span>{article.date}</span>
                     <span className="mx-2">•</span>
@@ -229,26 +199,21 @@ export default function Home() {
         {/* Newsletter Subscription */}
         <section className="bg-gray-100 p-8 border border-gray-300 mb-12">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="font-serif text-2xl font-bold mb-4">
-              Get Your Personalized Daily Briefing
-            </h2>
+            <h2 className="font-serif text-2xl font-bold mb-4">Get Your Personalized Daily Briefing</h2>
             <p className="text-gray-700 mb-6">
-              Subscribe to receive a daily email with news tailored to your
-              interests, summarized by AI from multiple trusted sources.
+              Subscribe to receive a daily email with news tailored to your interests, summarized by AI from multiple
+              trusted sources.
             </p>
             <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-black"
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
               />
-              <Button className="bg-black hover:bg-gray-800 text-white">
-                Subscribe
-              </Button>
+              <Button className="bg-black hover:bg-gray-800 text-white">Subscribe</Button>
             </div>
             <p className="text-xs text-gray-500 mt-4">
-              By subscribing, you agree to our Terms of Service and Privacy
-              Policy. You can unsubscribe at any time.
+              By subscribing, you agree to our Terms of Service and Privacy Policy. You can unsubscribe at any time.
             </p>
           </div>
         </section>
@@ -260,8 +225,7 @@ export default function Home() {
             <div>
               <h3 className="font-serif text-xl font-bold mb-4">Gestify</h3>
               <p className="text-gray-400 text-sm">
-                AI-powered news aggregation and summarization from trusted
-                sources worldwide.
+                AI-powered news aggregation and summarization from trusted sources worldwide.
               </p>
             </div>
             <div>
@@ -351,5 +315,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
