@@ -2,7 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import AIExplainer from "../components/ui/ai-explainer"
-import { TopBar } from "@/components/ui/topbar"
 export default function Home() {
   // Mock news data
   const featuredNews = {
@@ -90,7 +89,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Top bar with date and subscription info */}
-      <TopBar />
+
 
       {/* Main header with logo and navigation */}
 

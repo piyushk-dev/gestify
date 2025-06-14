@@ -85,7 +85,7 @@ export default function LoginButton() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="cursor-pointer h-8 w-8">
-                <AvatarImage src={user.picture} alt={user.name} />
+                <AvatarImage src={user.picture} alt={user.name} referrerPolicy="no-referrer" />
                 <AvatarFallback>{user.name?.[0] ?? "U"}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
