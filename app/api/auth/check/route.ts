@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
 
   try {
     if (accessToken) {
-      const decoded = verifyToken(accessToken, "access");
+      const decoded = await verifyToken(accessToken, "access");
       return NextResponse.json({
         loggedIn: true,
         user: {
@@ -27,9 +27,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const decoded = verifyToken(refreshToken, "refresh");
-    const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-      generateTokens(decoded);
+    const decoded =await  verifyToken(refreshToken, "refresh");
+    const { accessToken: newAccessToken, refreshToken: newRefreshToken } = await generateTokens(decoded);
 
     const response = NextResponse.json({
       loggedIn: true,

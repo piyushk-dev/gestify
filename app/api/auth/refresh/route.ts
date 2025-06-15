@@ -11,10 +11,10 @@ export async function POST(request: NextRequest) {
 
   try {
     // Verify the refresh token
-    const decoded = verifyToken(refreshToken, "refresh")
+    const decoded = await verifyToken(refreshToken, "refresh")
 
     // Generate new tokens
-    const { accessToken, refreshToken: newRefreshToken } = generateTokens({
+    const { accessToken, refreshToken: newRefreshToken } = await generateTokens({
       id: decoded.id,
       email: decoded.email,
       name: decoded.name,

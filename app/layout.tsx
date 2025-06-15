@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/components/theme-provider"; //causes hydration,
 import Navbar from "@/components/ui/navbar";
 import { AuthProvider } from "@/providers/authprovider";
 import { TopBar } from "@/components/ui/topbar";
+import Footer from "./components/layout/footer";
+import { Route } from "lucide-react";
+import RouteLoader from "./components/routeloader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,7 +42,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         > */}
-        <AuthProvider>{children}</AuthProvider>
+
+        <AuthProvider>
+          <RouteLoader />
+          {children}
+          </AuthProvider>
+                  <Footer />
         {/* </ThemeProvider> */}
       </body>
     </html>

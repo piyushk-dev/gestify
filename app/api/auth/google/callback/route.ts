@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { generateTokens } from "@/lib/auth";
-import { db } from "@/lib/db";
+import { sql } from "@/lib/postgres";
 // Google OAuth configuration
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "";
@@ -65,22 +65,17 @@ export async function GET(request: NextRequest) {
     const userId = userData.id || userData.sub;
     // 3. Insert or update user in database (UPSERT)
     try {
-      const { rows } = await db.query(
-        `
-    INSERT INTO users (email, name, picture)
-    VALUES ($1, $2, $3)
-    ON CONFLICT (email)
-    DO UPDATE SET
-      name = EXCLUDED.name,
-      picture = EXCLUDED.picture,
-      updated_at = NOW()
-    RETURNING id;
-    `,
-        [userData.email, userData.name, userData.picture]
-      );
-
-      const userId = rows[0].id;
-      // Use userId as needed from here on
+      await sql`
+        INSERT INTO users (email, name, picture)
+        VALUES (${userData.email}, ${userData.name}, ${userData.picture})
+        ON CONFLICT (email)
+        DO UPDATE SET
+          name = EXCLUDED.name,
+          picture = EXCLUDED.picture,
+          updated_at = NOW()
+        RETURNING id;
+        `;
+      // const userId = rows[0].id;
     } catch (error) {
       console.error("Database error:", error);
       return NextResponse.redirect(
@@ -90,7 +85,7 @@ export async function GET(request: NextRequest) {
 
     console.log("User data:", userData);
     // Generate our own JWT tokens
-    const { accessToken, refreshToken } = generateTokens({
+    const { accessToken, refreshToken } = await generateTokens({
       id: userData.id,
       email: userData.email,
       name: userData.name,

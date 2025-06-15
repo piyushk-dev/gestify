@@ -6,27 +6,21 @@ function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Color map for sentiment
-const sentimentStyles: Record<string, string> = {
-  Positive: "bg-green-100 text-green-700 border-green-300",
-  Negative: "bg-red-100 text-red-700 border-red-300",
-  Neutral: "bg-gray-100 text-gray-700 border-gray-300",
-};
-
-export default async function TrendingPage() {
+export default async function HoroscopePage() {
   const client = await connectToMongo();
   const db = client.db();
 
   const docs = await db
-    .collection("trendings")
+    .collection("horoscopes")
     .find({ date: { $type: "date" } })
     .sort({ date: -1 })
-    .limit(10)
+    .limit(12)
     .toArray();
 
-  const trendingArticles = docs.map((doc, index) => {
+  const horoscopes = docs.map((doc, index) => {
     const words = doc.story_summary?.split(/\s+/).length || 0;
     const readTime = Math.max(1, Math.ceil(words / 200)) + " min read";
+
     return {
       id: doc._id?.toString() || index,
       title: doc.title,
@@ -38,38 +32,29 @@ export default async function TrendingPage() {
         day: "numeric",
       }),
       readTime,
-      tags: doc.tags?.map(capitalize) || ["Trending"],
-      sentiment:
-      typeof doc.sentiment === "string"
-      ? capitalize(doc.sentiment)
-      : capitalize(doc.sentiment?.label || "Neutral"),
-      image: doc.image || "/placeholder.svg?height=700&width=700",
-      source: "Livemint",
+      tags: doc.tags?.map(capitalize) || [],
+      sign: capitalize(doc.sign || "Zodiac"),
+      source: "Hindustan Times",
     };
   });
-  // console.log(trendingArticles.length);
 
   return (
     <section className="mb-16 px-4 sm:px-8 lg:px-16 mt-1">
       <div className="border-b-2 border-black mb-8">
         <h2 className="font-serif text-3xl font-bold inline-block border-b-4 border-black pb-2 -mb-[2px]">
-          Trending Now
+          Daily Horoscope & Love Forecasts
         </h2>
       </div>
 
       <div className="space-y-14">
-        {trendingArticles.map((article) => (
+        {horoscopes.map((article) => (
           <article
             key={article.id}
             className="flex flex-col md:flex-row gap-6 md:gap-10 items-start"
           >
-            {/* Image */}
-            <div className="w-[320px] min-w-[320px] aspect-[16/16] bg-gray-200 rounded-md overflow-hidden">
-              <img
-                src={article.image}
-                alt={article.title}
-                className="w-full h-full object-cover"
-              />
+            {/* Placeholder Image Box */}
+            <div className="w-[320px] min-w-[320px] h-[320px] bg-gradient-to-br from-indigo-100 to-purple-200 rounded-md flex items-center justify-center text-indigo-700 font-bold text-3xl uppercase tracking-wider">
+              {article.sign}
             </div>
 
             {/* Content */}
@@ -96,20 +81,13 @@ export default async function TrendingPage() {
                 {article.excerpt}
               </p>
 
-              {/* Meta */}
+              {/* Meta Info */}
               <div className="flex flex-wrap items-center text-xs text-gray-500 gap-3">
                 <span>{article.date}</span>
                 <span>•</span>
                 <span>{article.readTime}</span>
                 <span>•</span>
                 <span>Source: {article.source}</span>
-              </div>
-
-              {/* Sentiment badge */}
-              <div
-                className={`inline-block text-xs px-2 py-1 border rounded ${sentimentStyles[article.sentiment] || sentimentStyles["Neutral"]}`}
-              >
-                Sentiment: {article.sentiment}
               </div>
 
               {/* Read More */}
@@ -119,16 +97,11 @@ export default async function TrendingPage() {
                 rel="noopener noreferrer"
                 className="text-sm font-medium text-blue-600 hover:underline mt-2"
               >
-                Read Full Article →
+                Read Full Horoscope →
               </Link>
             </div>
           </article>
         ))}
-      </div>
-
-      {/* Pagination or View More */}
-      <div className="mt-12 text-center">
-        {/* Optional "View More" button placeholder */}
       </div>
     </section>
   );

@@ -12,7 +12,7 @@ export default function AIExplainer() {
         <div className="md:w-3/4">
           <h2 className="font-serif text-2xl font-bold mb-3">AI-Powered News Analysis</h2>
           <p className="text-gray-700 mb-4">
-            Gestify uses advanced artificial intelligence to gather, analyze, and summarize news from multiple trusted
+            Gestify uses artificial intelligence to gather, analyze, and summarize news from multiple trusted
             sources. Our AI doesn't just aggregate - it compares different perspectives, identifies key facts, and
             presents a comprehensive view of each story.
           </p>

@@ -44,11 +44,16 @@
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
     "input-otp": "1.4.1",
+    "jose": "^6.0.11",
     "jsonwebtoken": "latest",
     "lucide-react": "^0.454.0",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.15.2",
     "next": "15.2.4",
     "next-themes": "^0.4.4",
+    "nprogress": "^0.2.0",
     "pg": "^8.16.0",
+    "postgres": "^3.4.7",
     "react": "^19",
     "react-day-picker": "8.10.1",
     "react-dom": "^19",
@@ -57,18 +62,20 @@
     "recharts": "2.15.0",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.6",
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22",
+    "@types/nprogress": "^0.2.3",
     "@types/pg": "^8.15.4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
   }
 }
