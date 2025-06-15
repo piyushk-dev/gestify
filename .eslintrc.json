@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "unused-imports"],
+  "rules": {
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "@next/next/no-img-element": "warn",
+    "react/no-unescaped-entities": "off",
+
+    // Strong cleanup for unused vars/imports
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+
+    "@typescript-eslint/no-unused-vars": "off", // handled by unused-imports
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-empty-interface": "warn"
+  }
+}

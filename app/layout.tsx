@@ -2,12 +2,11 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider"; //causes hydration, TODO: fix
+//causes hydration, TODO: fix
 import Navbar from "@/components/ui/navbar";
 import { AuthProvider } from "@/providers/authprovider";
 import { TopBar } from "@/components/ui/topbar";
 import Footer from "./components/layout/footer";
-import { Route } from "lucide-react";
 import RouteLoader from "./components/routeloader";
 
 const inter = Inter({

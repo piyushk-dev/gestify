@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ChevronDown, Search, User } from "lucide-react";
+import { ChevronDown, User } from "lucide-react";
 import MobileMenu from "../mobile-menu";
 
 export default function Header() {

@@ -1,6 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { connectToMongo } from "@/lib/mongodb";
 
 // Capitalize helper

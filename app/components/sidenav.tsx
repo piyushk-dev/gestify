@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from 'react'; // Keep for potential active link in main nav if desired later
+// Keep for potential active link in main nav if desired later
 
 interface FeedNavigationProps {
   categories: string[]; // These are now the main site categories (Trending, Politics, etc.)

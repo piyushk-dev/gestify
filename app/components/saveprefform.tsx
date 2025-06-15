@@ -12,7 +12,6 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useTransition, useState } from "react";
 import { savePreferences } from "@/lib/actions";
-import { useRef } from "react";
 const CATEGORIES = [
   "trending",
   "politics",
