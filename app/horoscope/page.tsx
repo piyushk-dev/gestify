@@ -1,3 +1,4 @@
+export const revalidate = 43200;
 import Link from "next/link";
 import { connectToMongo } from "@/lib/mongodb";
 

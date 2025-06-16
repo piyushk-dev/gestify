@@ -1,3 +1,4 @@
+export const revalidate = 43200;
 import { Button } from "@/components/ui/button";
 import AIExplainer from "../components/ui/ai-explainer";
 import Featured from "@/components/ui/featured";

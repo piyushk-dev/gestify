@@ -9,6 +9,7 @@ const REDIRECT_URI = process.env.NEXT_PUBLIC_URL
 
 // Generate Google OAuth URL
 export async function GET() {
+  console.log(process.env.NEXT_PUBLIC_URL);
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth"
   const options = {   
     redirect_uri: REDIRECT_URI,
