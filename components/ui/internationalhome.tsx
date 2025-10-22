@@ -20,8 +20,8 @@ export default async function InternationalHome() {
 
   if (!docs.length) return null;
 
-  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-  await sleep(2000); // Simulate delay
+  // const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  // await sleep(2000); // Simulate delay
 
   const internationalNews = docs.map((doc: any) => {
     const words = doc.story_summary?.split(/\s+/).length || 0;

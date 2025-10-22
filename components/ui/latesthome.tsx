@@ -52,7 +52,6 @@ export default async function LatestHome() {
           Latest News
         </h2>
       </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
         {latestNews.map((article) => (
           <div key={article.id} className="border-b pb-6">
@@ -62,7 +61,7 @@ export default async function LatestHome() {
                   src={article.image}
                   alt={article.title}
                   fill
-                  className="object-cover"
+                  className="object-cover object-[center_40%]"
                 />
               </div>
             </Link>
