@@ -13,12 +13,12 @@ export default async function EducationPage() {
 
   const docs = await db
     .collection("educations")
-    .find({ date: { $type: "date" } })
+    .find({})
     .sort({ date: -1 })
     .limit(10)
     .toArray();
 
-  const techArticles = docs.map((doc, index) => {
+  const articles = docs.map((doc, index) => {
     const words = doc.story_summary?.split(/\s+/).length || 0;
     const readTime = Math.max(1, Math.ceil(words / 150)) + " min read";
 
@@ -29,9 +29,9 @@ export default async function EducationPage() {
       category: doc.tags?.[0] || "General",
       tags: doc.tags?.map(capitalize) || ["General"],
       date: new Date(doc.date).toLocaleDateString("en-US", {
-        year: "numeric",
         month: "long",
         day: "numeric",
+        year: "numeric",
       }),
       readTime,
       image: doc.image || "/placeholder.svg?height=240&width=400",
@@ -39,7 +39,6 @@ export default async function EducationPage() {
       link: doc.link,
     };
   });
-
 
   //sleep(1000); // Simulate delay for loading effect
   // const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -54,7 +53,7 @@ export default async function EducationPage() {
       </div>
 
       <div className="space-y-14">
-        {techArticles.map((article) => (
+        {articles.map((article) => (
           <article
             key={article.id}
             className="flex flex-col md:flex-row gap-6 md:gap-10 items-start"
@@ -69,7 +68,7 @@ export default async function EducationPage() {
 
             <div className="flex flex-col gap-3 md:gap-4">
               <div className="flex flex-wrap gap-2 text-xs font-medium text-white">
-                {article.tags.map((tag:string) => (
+                {article.tags.map((tag: string) => (
                   <span
                     key={tag}
                     className="bg-black px-2 py-1 rounded-sm tracking-wide"
@@ -88,7 +87,7 @@ export default async function EducationPage() {
               </p>
 
               <div className="flex flex-wrap items-center text-xs text-gray-500 gap-3">
-                <span>{"NA"}</span>
+                <span>{article.date}</span>
                 <span>•</span>
                 <span>{article.readTime}</span>
                 <span>•</span>
