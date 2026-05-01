@@ -4,35 +4,35 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 250 14% 96%;
+    --foreground: 0 0% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card: 250 14% 97%;
+    --card-foreground: 0 0% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover: 250 14% 97%;
+    --popover-foreground: 0 0% 15%;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 0 0% 20%;
+    --primary-foreground: 250 14% 96%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 0 0% 85%;
+    --secondary-foreground: 0 0% 20%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 0 0% 75%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 0 65% 45%;
+    --accent-foreground: 250 14% 96%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: 0 0% 80%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 20%;
 
-    --radius: 0.5rem;
+    --radius: 0rem;
   }
 
   .dark {
@@ -75,5 +75,83 @@
   }
   .font-serif {
     font-family: var(--font-playfair);
+  }
+}
+
+/* Newspaper texture and skeuomorphic styles */
+@layer components {
+  .newspaper-paper {
+    @apply bg-[#f5f1e8];
+    background-image: 
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.02) 2px,
+        rgba(0, 0, 0, 0.02) 4px
+      );
+  }
+
+  .newspaper-masthead {
+    @apply border-b-4 border-b-black pb-4 mb-6;
+    letter-spacing: 0.15em;
+  }
+
+  .newspaper-column {
+    @apply border-r-2 border-r-gray-400 pr-6 last:border-r-0 last:pr-0;
+  }
+
+  .newspaper-article {
+    @apply border-l-4 border-l-red-700 pl-4 mb-6 pb-6 border-b border-b-gray-400;
+  }
+
+  .newspaper-headline {
+    @apply font-serif font-black text-3xl md:text-4xl leading-tight text-gray-900 mb-2;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .newspaper-byline {
+    @apply font-sans text-xs uppercase tracking-wider text-gray-700 font-semibold mb-4;
+    letter-spacing: 0.2em;
+  }
+
+  .newspaper-drop-cap {
+    @apply float-left font-serif font-bold text-5xl leading-none pr-2 pt-1;
+  }
+
+  .newspaper-body {
+    @apply font-serif text-sm leading-relaxed text-gray-800 columns-2 md:columns-3 gap-4;
+  }
+
+  .newspaper-section-title {
+    @apply font-serif font-bold text-2xl text-gray-900 uppercase tracking-widest mb-4;
+    letter-spacing: 0.15em;
+  }
+
+  .newspaper-sub-article {
+    @apply mb-4 pb-4 border-b border-b-gray-300 last:border-b-0 last:pb-0;
+  }
+
+  .newspaper-date-badge {
+    @apply bg-black text-white px-3 py-1 font-sans text-xs font-bold rounded-none;
+  }
+
+  .newspaper-shadow {
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 4px 8px rgba(0, 0, 0, 0.12),
+      0 8px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .newspaper-fold {
+    @apply relative;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.05) 0%, transparent 50%, rgba(0, 0, 0, 0.05) 100%);
   }
 }

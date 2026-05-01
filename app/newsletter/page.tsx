@@ -7,6 +7,7 @@ import { Download, FileText, Smartphone } from "lucide-react"
 import { verifyToken } from "@/lib/auth"
 import { sql } from "@/lib/postgres"
 import { connectToMongo } from "@/lib/mongodb"
+import NewspaperLayout from "./newspaper"
 
 const CATEGORIES = [
   "trending",
@@ -479,6 +480,20 @@ export default async function NewsletterPage() {
 
   // Server-side mobile detection
   const isMobile = await isMobileDevice()
+
+  // Desktop View - Newspaper Layout
+  if (!isMobile) {
+    return (
+      <NewspaperLayout
+        today={today}
+        mainHeadline={mainHeadline}
+        secondaryHeadline={secondaryHeadline}
+        moreStories={moreStories}
+        categoryData={categoryData}
+        savedPrefs={savedPrefs}
+      />
+    )
+  }
 
   // Mobile View - PDF Download Option
   if (isMobile) {
