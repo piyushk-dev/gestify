@@ -48,198 +48,217 @@ export default function NewspaperLayout({
     })
   }
 
+  const getDropCap = (text: string) => {
+    return text.charAt(0)
+  }
+
+  const getBodyText = (text: string) => {
+    return text.slice(1)
+  }
+
   return (
-    <div className="newspaper-paper min-h-screen">
-      {/* Outer margin and shadow effect */}
-      <div className="max-w-[900px] mx-auto px-6 py-12 newspaper-shadow bg-[#faf7f2]">
-        {/* MASTHEAD */}
-        <header className="newspaper-masthead text-center mb-8">
-          <div className="mb-4">
-            <h1 className="font-serif font-black text-6xl md:text-7xl text-gray-900 leading-none mb-2">
-              GESTIFY
+    <div className="newspaper-paper min-h-screen py-8 px-4 sm:px-6 lg:px-8 newspaper-shadow">
+      <div className="max-w-6xl mx-auto">
+        {/* Newspaper Masthead */}
+        <div className="mb-8 text-center">
+          <div className="newspaper-masthead">
+            <h1 className="font-serif font-black text-6xl md:text-7xl text-gray-900 tracking-tighter mb-2">
+              THE DAILY BRIEF
             </h1>
-            <p className="text-xs uppercase tracking-[0.3em] text-gray-700 font-bold">
-              Daily News Digest
+            <p className="font-sans text-xs md:text-sm uppercase tracking-widest text-gray-700 letter-spacing">
+              Your Daily News & Insights
             </p>
           </div>
 
-          {/* Date and Edition */}
-          <div className="flex items-center justify-center gap-3 mt-6 flex-wrap">
-            <span className="newspaper-date-badge">{today.toUpperCase()}</span>
-            <span className="text-xs uppercase tracking-widest text-gray-600 font-semibold">
-              Your Personalized Edition
-            </span>
-          </div>
-
-          {/* Tagline */}
-          <p className="text-sm italic text-gray-600 mt-4 font-serif">
-            {`"${savedPrefs.length} ${savedPrefs.length === 1 ? 'category' : 'categories'} of curated news""`}
-          </p>
-        </header>
-
-        {/* DIVIDER */}
-        <div className="border-t-2 border-t-gray-400 border-b border-b-gray-300 py-3 mb-8">
-          <div className="flex justify-center gap-2">
-            <span className="w-1 h-1 bg-gray-900 rounded-full"></span>
-            <span className="w-1 h-1 bg-gray-900 rounded-full"></span>
-            <span className="w-1 h-1 bg-gray-900 rounded-full"></span>
+          {/* Date and Edition Badge */}
+          <div className="flex justify-between items-center mt-6 text-xs">
+            <span className="text-gray-600">EDITION NO. 001</span>
+            <div className="newspaper-date-badge">
+              {formatDate(today)}
+            </div>
+            <span className="text-gray-600">WEEKDAY EDITION</span>
           </div>
         </div>
 
-        {/* MAIN HEADLINE SECTION */}
-        {mainHeadline && (
-          <section className="mb-8 pb-8 border-b-4 border-b-black">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Main Story Image and Content */}
+        {/* Top Divider */}
+        <div className="h-1 bg-black mb-8 mt-8"></div>
+
+        {/* Main Story Section - Full Width */}
+        <div className="mb-12">
+          <article className="bg-white bg-opacity-60 p-6 sm:p-8 border-2 border-gray-800 newspaper-shadow">
+            <div className="grid md:grid-cols-3 gap-8 items-start">
+              {/* Main Headline Content */}
               <div className="md:col-span-2">
-                <h2 className="newspaper-headline">
+                <span className="inline-block bg-gray-900 text-white px-3 py-1 text-xs font-bold uppercase tracking-widest mb-4">
+                  {mainHeadline.category}
+                </span>
+
+                <h2 className="newspaper-headline font-serif font-black text-4xl md:text-5xl text-gray-900 mb-4 leading-tight">
                   {mainHeadline.title}
                 </h2>
-                <div className="newspaper-byline flex gap-2">
-                  <span>{mainHeadline.category}</span>
-                  <span>•</span>
-                  <span>{formatDate(mainHeadline.date)}</span>
-                  <span>•</span>
-                  <span>{mainHeadline.readTime}</span>
-                </div>
 
-                {/* Article preview */}
-                <p className="text-sm leading-relaxed text-gray-800 mb-4 font-serif">
-                  {mainHeadline.excerpt?.substring(0, 300)}...
+                <p className="newspaper-byline text-gray-700 mb-4">
+                  By {mainHeadline.sources?.[0] || 'Staff Writer'} | {formatDate(mainHeadline.date)} | Read Time: {mainHeadline.readTime}
                 </p>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {mainHeadline.tags?.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="bg-gray-200 text-gray-800 px-3 py-1 text-xs font-bold uppercase tracking-wider"
-                    >
-                      {tag}
+                <div className="prose prose-sm max-w-none text-gray-800">
+                  <p className="font-serif text-base leading-relaxed">
+                    <span className="newspaper-drop-cap text-gray-900 font-serif font-bold">
+                      {getDropCap(mainHeadline.excerpt)}
                     </span>
-                  ))}
+                    {getBodyText(mainHeadline.excerpt)}
+                  </p>
                 </div>
-
-                <a
-                  href={mainHeadline.link || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-red-700 font-bold text-sm uppercase tracking-wide hover:underline flex items-center gap-1"
-                >
-                  Read Full Story <ChevronRight size={16} />
-                </a>
               </div>
 
-              {/* Image column */}
-              <div className="md:col-span-1">
-                {mainHeadline.image && mainHeadline.image !== '/placeholder.svg?height=400&width=600' ? (
-                  <div className="relative w-full h-64 border-2 border-gray-400 shadow-lg bg-gray-100">
+              {/* Main Image */}
+              {mainHeadline.image && (
+                <div className="md:col-span-1">
+                  <div className="relative w-full h-64 md:h-80 border-4 border-gray-800 bg-gray-200 overflow-hidden">
                     <Image
                       src={mainHeadline.image}
                       alt={mainHeadline.title}
                       fill
                       className="object-cover"
+                      priority
                     />
                   </div>
-                ) : (
-                  <div className="w-full h-64 border-2 border-gray-400 bg-gray-100 flex items-center justify-center">
-                    <span className="text-gray-500 font-serif italic text-sm">[Image]</span>
-                  </div>
-                )}
-              </div>
+                  <p className="text-xs text-gray-700 mt-2 font-sans italic text-center">
+                    Photo Credit: Associated Press
+                  </p>
+                </div>
+              )}
             </div>
-          </section>
-        )}
-
-        {/* SECONDARY HEADLINE & SUPPORTING STORIES */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Secondary Story - Featured */}
-          {secondaryHeadline && (
-            <div className="md:col-span-1 newspaper-article">
-              <h3 className="font-serif font-bold text-xl leading-snug text-gray-900 mb-2">
-                {secondaryHeadline.title}
-              </h3>
-              <p className="newspaper-byline mb-3">
-                {formatDate(secondaryHeadline.date)}
-              </p>
-              <p className="text-xs leading-relaxed text-gray-800 font-serif mb-3">
-                {secondaryHeadline.excerpt?.substring(0, 150)}...
-              </p>
-              <a
-                href={secondaryHeadline.link || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-red-700 font-bold text-xs uppercase tracking-wide hover:underline"
-              >
-                Continue Reading →
-              </a>
-            </div>
-          )}
-
-          {/* More Stories - 2 columns */}
-          {moreStories.slice(0, 2).map((story, idx) => (
-            <div key={idx} className="newspaper-article">
-              <h3 className="font-serif font-bold text-lg leading-snug text-gray-900 mb-2">
-                {story.title}
-              </h3>
-              <p className="text-xs font-bold text-gray-700 uppercase mb-2">
-                {story.category}
-              </p>
-              <p className="text-xs leading-relaxed text-gray-800 font-serif mb-3">
-                {story.excerpt?.substring(0, 120)}...
-              </p>
-            </div>
-          ))}
+          </article>
         </div>
 
-        {/* SECTION DIVIDERS - INSIDE PAGES */}
-        {savedPrefs.length > 0 && (
-          <section className="mb-8">
-            <div className="border-t-2 border-t-gray-400 border-b border-b-gray-300 py-3 mb-6">
-              <h2 className="newspaper-section-title text-center">More From Today's Edition</h2>
-            </div>
+        {/* Section Divider */}
+        <div className="grid grid-cols-3 gap-2 mb-8">
+          <div className="h-1 bg-gray-800"></div>
+          <div className="h-1 bg-red-700"></div>
+          <div className="h-1 bg-gray-800"></div>
+        </div>
 
-            {/* Multi-column layout for remaining stories */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {moreStories.slice(2, 8).map((story, idx) => (
-                <div
-                  key={idx}
-                  className="newspaper-sub-article hover:bg-gray-50 transition-colors"
+        {/* Two-Column Section */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Secondary Headline */}
+          <div className="newspaper-article">
+            <span className="inline-block bg-red-700 text-white px-2 py-1 text-xs font-bold uppercase tracking-widest mb-3">
+              {secondaryHeadline.category}
+            </span>
+            <h3 className="newspaper-headline font-serif font-bold text-2xl md:text-3xl text-gray-900 mb-2">
+              {secondaryHeadline.title}
+            </h3>
+            <p className="newspaper-byline text-xs text-gray-600 mb-3">
+              {formatDate(secondaryHeadline.date)}
+            </p>
+            <p className="font-serif text-sm leading-relaxed text-gray-800 mb-4">
+              {secondaryHeadline.excerpt}
+            </p>
+            <Link
+              href={`/article/${secondaryHeadline.id}`}
+              className="inline-flex items-center text-red-700 font-semibold text-sm hover:text-red-900 transition"
+            >
+              Read Full Story <ChevronRight className="w-4 h-4 ml-1" />
+            </Link>
+          </div>
+
+          {/* Quick Stories */}
+          <div className="space-y-4">
+            <h4 className="newspaper-section-title font-serif font-bold text-xl uppercase text-gray-900 border-b-2 border-gray-800 pb-2">
+              In Brief
+            </h4>
+            {moreStories.slice(0, 3).map((story) => (
+              <div key={story.id} className="newspaper-sub-article pb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-600">
+                  {story.category}
+                </span>
+                <h5 className="font-serif font-bold text-sm text-gray-900 mt-1 mb-1 line-clamp-2">
+                  {story.title}
+                </h5>
+                <p className="font-sans text-xs text-gray-600 mb-2">
+                  {formatDate(story.date)}
+                </p>
+                <Link
+                  href={`/article/${story.id}`}
+                  className="text-red-700 hover:text-red-900 text-xs font-semibold transition"
                 >
-                  <h4 className="font-serif font-bold text-base leading-tight text-gray-900 mb-1">
-                    {story.title}
-                  </h4>
-                  <p className="text-xs uppercase tracking-wider text-gray-600 font-semibold mb-2">
-                    {story.category}
-                  </p>
-                  <p className="text-xs leading-relaxed text-gray-700 font-serif mb-3">
-                    {story.excerpt?.substring(0, 100)}...
-                  </p>
-                  <p className="text-xs text-gray-500 italic">{story.readTime}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+                  Continue Reading →
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
 
-        {/* FOOTER */}
-        <footer className="border-t-2 border-t-black mt-8 pt-6">
-          <div className="text-center text-xs text-gray-600 font-sans space-y-2">
-            <p>
-              Gestify News • Personalized Daily Digest
+        {/* Full Width Divider */}
+        <div className="h-px bg-gray-400 my-12"></div>
+
+        {/* Categories Section */}
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          {Object.entries(categoryData)
+            .slice(0, 3)
+            .map(([category, articles]) => (
+              <div key={category} className="newspaper-column">
+                <h4 className="newspaper-section-title font-serif font-bold text-xl uppercase text-gray-900 border-b-2 border-gray-800 pb-2 mb-4">
+                  {category.toUpperCase()}
+                </h4>
+
+                <div className="space-y-4">
+                  {articles.slice(0, 2).map((article) => (
+                    <article key={article.id} className="newspaper-sub-article">
+                      <h5 className="font-serif font-bold text-base text-gray-900 mb-2 line-clamp-2 leading-tight">
+                        {article.title}
+                      </h5>
+                      <p className="font-serif text-xs leading-relaxed text-gray-700 mb-3 line-clamp-3">
+                        {article.excerpt}
+                      </p>
+                      <div className="flex justify-between items-center text-xs text-gray-600">
+                        <span>{article.readTime}</span>
+                        <Link
+                          href={`/article/${article.id}`}
+                          className="text-red-700 hover:text-red-900 font-bold transition"
+                        >
+                          Read →
+                        </Link>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            ))}
+        </div>
+
+        {/* Bottom Section - Weather & Notices */}
+        <div className="grid md:grid-cols-2 gap-8 mt-12 pt-8 border-t-4 border-black">
+          <div className="text-center py-6 border-r-2 border-gray-400">
+            <h4 className="newspaper-section-title font-serif font-bold text-lg uppercase mb-4">
+              Stay Updated
+            </h4>
+            <p className="font-sans text-sm text-gray-700 mb-4">
+              Subscribe to our newsletter for daily updates and exclusive insights.
             </p>
-            <p className="text-[10px] uppercase tracking-widest">
-              © {new Date().getFullYear()} Gestify. All rights reserved.
-            </p>
-            <p className="text-[10px] italic">
-              This is your personalized news edition based on your selected preferences.
+            <button className="bg-gray-900 text-white px-6 py-2 font-bold uppercase text-xs hover:bg-red-700 transition">
+              Subscribe Now
+            </button>
+          </div>
+
+          <div className="text-center py-6">
+            <h4 className="newspaper-section-title font-serif font-bold text-lg uppercase mb-4">
+              About This Edition
+            </h4>
+            <p className="font-sans text-xs text-gray-600">
+              The Daily Brief is your trusted source for news, analysis, and insights. Published daily.
             </p>
           </div>
-        </footer>
-      </div>
+        </div>
 
-      {/* Page fold effect */}
-      <div className="newspaper-fold h-1 w-full"></div>
+        {/* Footer */}
+        <div className="mt-12 pt-8 border-t-2 border-black text-center">
+          <p className="font-sans text-xs text-gray-700 tracking-widest uppercase letter-spacing">
+            &copy; 2024 The Daily Brief | All Rights Reserved | Privacy Policy | Terms of Service
+          </p>
+        </div>
+      </div>
     </div>
   )
 }
